@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "88644784996",
+    "project_id": "student-companion-d53ec",
+    "storage_bucket": "student-companion-d53ec.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:88644784996:android:4902a161bf78912907a071",
+        "android_client_info": {
+          "package_name": "com.studentcompanion.student_companion"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3hP1Y4LwhxgGNDkiLiMLHaY47R0UZ4I4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
