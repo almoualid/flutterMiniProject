@@ -18,6 +18,7 @@ import 'package:student_academic_manager/services/notification_service.dart'; //
 import 'package:student_academic_manager/screens/home_screen.dart';
 import 'package:student_academic_manager/screens/index.dart';
 import 'package:student_academic_manager/models/index.dart';
+import 'package:student_academic_manager/ai_services/features/ai_assistant/screens/ai_assistant_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -59,8 +60,9 @@ class MainApp extends StatelessWidget {
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
       ),
-      home: const HomeScreen(),
+      home: const HomeWithChatbotButton(),
       routes: {
+        '/chatbot': (context) => const AIAssistantScreen(),
         '/courses': (context) => const CourseListScreen(),
         '/courses/add': (context) => const CourseFormScreen(),
         '/homeworks': (context) => const HomeworkListScreen(),
@@ -82,6 +84,31 @@ class MainApp extends StatelessWidget {
         }
         return null;
       },
+    );
+  }
+}
+
+class HomeWithChatbotButton extends StatelessWidget {
+  const HomeWithChatbotButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        const HomeScreen(),
+        Positioned(
+          left: 16,
+          bottom: 88,
+          child: SafeArea(
+            child: FloatingActionButton.extended(
+              heroTag: 'studybot-fab',
+              onPressed: () => Navigator.of(context).pushNamed('/chatbot'),
+              icon: const Icon(Icons.auto_awesome_rounded),
+              label: const Text('StudyBot'),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
