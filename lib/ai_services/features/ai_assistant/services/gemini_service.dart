@@ -9,7 +9,7 @@ import 'package:http/http.dart' as http;
 import '../models/chat_message.dart';
 
 class GeminiService {
-  static const _apiKey = 'AIzaSyCJr_8aBuaCTvzcMy3j2oB9QJG5honaxCk';
+  static const _apiKey = 'AIzaSyDuDJvrfsfPNy_lY8JIOT8-T8EOvZPa-UM';
   static const _geminiModel = 'gemini-2.5-flash';
 
   static const _systemPrompt = '''
