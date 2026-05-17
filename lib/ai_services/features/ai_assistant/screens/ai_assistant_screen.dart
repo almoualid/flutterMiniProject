@@ -390,6 +390,13 @@ class _AIAssistantScreenState extends State<AIAssistantScreen> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
+        leading: Navigator.of(context).canPop()
+            ? IconButton(
+                tooltip: 'Retour',
+                onPressed: () => Navigator.of(context).pop(),
+                icon: const Icon(Icons.arrow_back_rounded),
+              )
+            : null,
         title: const Text('StudyBot'),
         actions: [
           IconButton(
