@@ -1,0 +1,39 @@
+name: student_academic_manager
+description: "Student Academic Manager - Notifications"
+publish_to: "none"
+version: 0.3.0+3
+
+environment:
+  sdk: ^3.11.4
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # ── Firebase ──────────────────────────────────────────────────
+  firebase_core: ^4.7.0
+  cloud_firestore: ^6.3.0
+  firebase_messaging: ^16.2.2      # ← corrigé
+
+  # ── Notifications ─────────────────────────────────────────────
+  flutter_local_notifications: ^18.0.1
+  timezone: ^0.9.4
+
+  # ── Stockage local ────────────────────────────────────────────
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+
+  # ── Connectivité ──────────────────────────────────────────────
+  connectivity_plus: ^6.0.3
+
+  # ── Utilitaires ───────────────────────────────────────────────
+  uuid: ^4.4.0
+  intl: ^0.19.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
