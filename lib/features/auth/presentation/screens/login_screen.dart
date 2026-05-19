@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:student_companion/features/auth/domain/models/auth_failure.dart';
@@ -36,18 +37,38 @@ class _LoginScreenState extends State<LoginScreen> {
     );
 
     if (!success && mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Row(
+      _showErrorSnackBar(auth.errorMessage ?? 'Erreur de connexion');
+    }
+  }
+
+  void _showErrorSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        content: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: const Color(0xFFFF5252).withOpacity(0.9),
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: Colors.white.withOpacity(0.2)),
+          ),
+          child: Row(
             children: [
-              const Icon(Icons.error_outline, color: Color(0xFFCF6679)),
-              const SizedBox(width: 10),
-              Expanded(child: Text(auth.errorMessage ?? 'Erreur inconnue')),
+              const Icon(Icons.error_outline, color: Colors.white),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  message,
+                  style: const TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.w600),
+                ),
+              ),
             ],
           ),
         ),
-      );
-    }
+      ),
+    );
   }
 
   @override
@@ -56,118 +77,147 @@ class _LoginScreenState extends State<LoginScreen> {
     final isLoading = context.watch<AuthProvider>().isLoading;
 
     return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 40),
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 460),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // --- Header ---
-                  _GradientIcon(icon: Icons.school_rounded),
-                  const SizedBox(height: 28),
-                  Text(
-                    'Bon retour ! 👋',
-                    style: theme.textTheme.headlineMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Connectez-vous pour continuer.',
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      color: const Color(0xFF9E9EBF),
-                    ),
-                  ),
-                  const SizedBox(height: 40),
-
-                  // --- Form ---
-                  Form(
-                    key: _formKey,
-                    child: Column(
-                      children: [
-                        TextFormField(
-                          controller: _emailController,
-                          keyboardType: TextInputType.emailAddress,
-                          autocorrect: false,
-                          decoration: const InputDecoration(
-                            labelText: 'Email',
-                            prefixIcon: Icon(Icons.email_outlined),
-                          ),
-                          validator: (v) {
-                            if (v == null || v.trim().isEmpty) {
-                              return 'Veuillez entrer votre email.';
-                            }
-                            if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(v)) {
-                              return 'Format d\'email invalide.';
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(height: 16),
-                        TextFormField(
-                          controller: _passwordController,
-                          obscureText: _obscurePassword,
-                          decoration: InputDecoration(
-                            labelText: 'Mot de passe',
-                            prefixIcon: const Icon(Icons.lock_outline),
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                _obscurePassword
-                                    ? Icons.visibility_outlined
-                                    : Icons.visibility_off_outlined,
-                              ),
-                              onPressed: () => setState(
-                                  () => _obscurePassword = !_obscurePassword),
-                            ),
-                          ),
-                          validator: (v) {
-                            if (v == null || v.isEmpty) {
-                              return 'Veuillez entrer votre mot de passe.';
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(height: 28),
-                        PrimaryButton(
-                          label: 'Se connecter',
-                          onPressed: _submit,
-                          isLoading: isLoading,
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-
-                  // --- Footer ---
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Pas encore de compte ? ",
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          color: const Color(0xFF9E9EBF),
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () => context.go('/register'),
-                        child: const Text('Créer un compte'),
-                      ),
-                    ],
-                  ),
-                ],
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Color(0xFF0A0A0E), Color(0xFF161622)],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
               ),
             ),
           ),
-        ),
+          Positioned(
+            top: -100,
+            right: -100,
+            child: Container(
+              width: 300,
+              height: 300,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: theme.colorScheme.primary.withOpacity(0.05),
+              ),
+            ),
+          ),
+          SafeArea(
+            child: Center(
+              child: SingleChildScrollView(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 28, vertical: 40),
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 420),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                        child: _GradientIcon(icon: Icons.school_rounded),
+                      ),
+                      const SizedBox(height: 48),
+                      Text(
+                        'Bienvenue',
+                        style: GoogleFonts.plusJakartaSans(
+                          fontSize: 32,
+                          fontWeight: FontWeight.w800,
+                          letterSpacing: -1,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        'Accédez à votre espace étudiant',
+                        style: GoogleFonts.plusJakartaSans(
+                          fontSize: 16,
+                          color: const Color(0xFFA0A0B0),
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const SizedBox(height: 40),
+                      Form(
+                        key: _formKey,
+                        child: Column(
+                          children: [
+                            TextFormField(
+                              controller: _emailController,
+                              keyboardType: TextInputType.emailAddress,
+                              decoration: const InputDecoration(
+                                labelText: 'Email',
+                                prefixIcon:
+                                    Icon(Icons.alternate_email_rounded),
+                              ),
+                              validator: (v) {
+                                if (v == null || v.trim().isEmpty) {
+                                  return 'L\'email est requis';
+                                }
+                                if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
+                                    .hasMatch(v)) {
+                                  return 'Format d\'email invalide';
+                                }
+                                return null;
+                              },
+                            ),
+                            const SizedBox(height: 20),
+                            TextFormField(
+                              controller: _passwordController,
+                              obscureText: _obscurePassword,
+                              decoration: InputDecoration(
+                                labelText: 'Mot de passe',
+                                prefixIcon:
+                                    const Icon(Icons.lock_outline_rounded),
+                                suffixIcon: IconButton(
+                                  icon: Icon(
+                                    _obscurePassword
+                                        ? Icons.visibility_outlined
+                                        : Icons.visibility_off_outlined,
+                                    size: 20,
+                                  ),
+                                  onPressed: () => setState(() =>
+                                      _obscurePassword = !_obscurePassword),
+                                ),
+                              ),
+                              validator: (v) {
+                                if (v == null || v.isEmpty) {
+                                  return 'Le mot de passe est requis';
+                                }
+                                return null;
+                              },
+                            ),
+                            const SizedBox(height: 32),
+                            PrimaryButton(
+                              label: 'Connexion',
+                              onPressed: _submit,
+                              isLoading: isLoading,
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 32),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            'Nouveau ici ? ',
+                            style: TextStyle(color: Color(0xFFA0A0B0)),
+                          ),
+                          TextButton(
+                            onPressed: () => context.go('/register'),
+                            child: const Text('Créer un compte'),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 }
 
-/// Gradient icon used as the app logo mark on auth screens.
 class _GradientIcon extends StatelessWidget {
   final IconData icon;
   const _GradientIcon({required this.icon});
@@ -175,24 +225,24 @@ class _GradientIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 64,
-      height: 64,
+      width: 80,
+      height: 80,
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [Color(0xFF6C63FF), Color(0xFF03DAC6)],
+          colors: [Color(0xFF7C4DFF), Color(0xFF00E5FF)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF6C63FF).withOpacity(0.4),
+            color: const Color(0xFF7C4DFF).withOpacity(0.3),
             blurRadius: 20,
-            offset: const Offset(0, 8),
+            offset: const Offset(0, 10),
           ),
         ],
       ),
-      child: Icon(icon, color: Colors.white, size: 32),
+      child: Icon(icon, color: Colors.white, size: 40),
     );
   }
 }

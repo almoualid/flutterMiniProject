@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:student_companion/features/auth/data/services/auth_service.dart';
 import 'package:student_companion/features/auth/domain/models/auth_failure.dart';
 
-/// Authentication state managed by this enum.
 enum AuthStatus { initial, authenticated, unauthenticated, loading }
 
 /// Presentation layer: exposes auth state and actions to the UI.
-/// Wraps [AuthService] and manages loading / error state.
 class AuthProvider extends ChangeNotifier {
   final AuthService _authService;
 
@@ -22,7 +20,6 @@ class AuthProvider extends ChangeNotifier {
 
   AuthProvider({required AuthService authService})
       : _authService = authService {
-    // Listen to Firebase auth state persistently (auto-login).
     _authService.authStateChanges.listen(_onAuthStateChanged);
   }
 
@@ -43,7 +40,6 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Returns true on success, false on failure (error stored in [errorMessage]).
   Future<bool> signIn({
     required String email,
     required String password,
@@ -61,7 +57,6 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  /// Returns true on success, false on failure.
   Future<bool> signUp({
     required String email,
     required String password,

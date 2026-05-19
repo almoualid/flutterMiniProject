@@ -1,8 +1,8 @@
 name: student_companion
-description: "A smart student companion app"
+description: "Student Companion — Gestion académique complète avec IA, notifications et mode offline"
 publish_to: 'none'
 
-version: 1.0.0+1
+version: 2.0.0+1
 
 environment:
   sdk: ^3.11.4
@@ -13,18 +13,41 @@ dependencies:
 
   cupertino_icons: ^1.0.8
 
-  # Firebase
+  # ── Firebase ──────────────────────────────────────────────────────────────
   firebase_core: ^3.13.0
   firebase_auth: ^5.5.2
+  cloud_firestore: ^5.6.0
+  firebase_messaging: ^15.2.5
 
-  # State management
+  # ── State Management ──────────────────────────────────────────────────────
   provider: ^6.1.2
 
-  # Navigation
+  # ── Navigation ────────────────────────────────────────────────────────────
   go_router: ^15.1.2
 
-  # UI
+  # ── UI / Fonts ────────────────────────────────────────────────────────────
   google_fonts: ^6.2.1
+
+  # ── AI ────────────────────────────────────────────────────────────────────
+  google_generative_ai: ^0.4.6
+  http: ^1.6.0
+  file_picker: ^8.1.2
+  syncfusion_flutter_pdf: ^33.2.6
+
+  # ── Stockage local ────────────────────────────────────────────────────────
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+
+  # ── Notifications ─────────────────────────────────────────────────────────
+  flutter_local_notifications: ^18.0.1
+  timezone: ^0.9.4
+
+  # ── Connectivité ──────────────────────────────────────────────────────────
+  connectivity_plus: ^6.0.3
+
+  # ── Utilitaires ───────────────────────────────────────────────────────────
+  uuid: ^4.4.0
+  intl: ^0.19.0
 
 dev_dependencies:
   flutter_test:

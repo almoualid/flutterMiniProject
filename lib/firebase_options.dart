@@ -4,16 +4,6 @@ import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
 
-/// Default [FirebaseOptions] for use with your Firebase apps.
-///
-/// Example:
-/// ```dart
-/// import 'firebase_options.dart';
-/// // ...
-/// await Firebase.initializeApp(
-///   options: DefaultFirebaseOptions.currentPlatform,
-/// );
-/// ```
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
@@ -23,10 +13,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -62,6 +49,14 @@ class DefaultFirebaseOptions {
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyB3hP1Y4LwhxgGNDkiLiMLHaY47R0UZ4I4',
     appId: '1:88644784996:android:4902a161bf78912907a071',
+    messagingSenderId: '88644784996',
+    projectId: 'student-companion-d53ec',
+    storageBucket: 'student-companion-d53ec.firebasestorage.app',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyCEqLkcHDjIvNT2P8EQlmpt831CcN69eEg',
+    appId: '1:88644784996:ios:c78e2ff0d3f8e79d07a071',
     messagingSenderId: '88644784996',
     projectId: 'student-companion-d53ec',
     storageBucket: 'student-companion-d53ec.firebasestorage.app',

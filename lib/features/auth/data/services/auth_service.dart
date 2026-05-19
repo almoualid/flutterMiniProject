@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:student_companion/features/auth/domain/models/auth_failure.dart';
 
-/// Data layer: wraps FirebaseAuth and exposes clean async methods.
+/// Data layer : wraps FirebaseAuth and exposes clean async methods.
 /// Throws [AuthFailure] on every error so callers never deal with Firebase directly.
 class AuthService {
   final FirebaseAuth _auth;

@@ -1,9 +1,13 @@
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:student_companion/features/auth/presentation/providers/auth_provider.dart';
 import 'package:student_companion/features/auth/presentation/screens/login_screen.dart';
 import 'package:student_companion/features/auth/presentation/screens/register_screen.dart';
 import 'package:student_companion/features/home/presentation/screens/home_screen.dart';
+import 'package:student_companion/features/courses/presentation/screens/course_form_screen.dart';
+import 'package:student_companion/features/courses/data/models/course.dart';
+import 'package:student_companion/features/homework/presentation/screens/homework_form_screen.dart';
+import 'package:student_companion/features/homework/data/models/homework.dart';
+import 'package:student_companion/features/ai_assistant/screens/ai_assistant_screen.dart';
 import 'package:student_companion/shared/screens/loading_screen.dart';
 
 class AppRouter {
@@ -16,21 +20,18 @@ class AppRouter {
     initialLocation: '/',
     redirect: (context, state) {
       final status = authProvider.status;
-      final isLoggingIn = state.matchedLocation == '/login' || state.matchedLocation == '/register';
+      final isAuthPage = state.matchedLocation == '/login' ||
+          state.matchedLocation == '/register';
 
-      // While initializing, return null to let the router handle the current state
-      // or redirect to a loading route if we want more control.
       if (status == AuthStatus.initial) return '/loading';
 
       final bool loggedIn = status == AuthStatus.authenticated;
 
       if (!loggedIn) {
-        // If not logged in and not on auth pages, go to login
-        return isLoggingIn ? null : '/login';
+        return isAuthPage ? null : '/login';
       }
 
-      // If logged in and on auth pages, go to home
-      if (isLoggingIn || state.matchedLocation == '/loading') {
+      if (isAuthPage || state.matchedLocation == '/loading') {
         return '/';
       }
 
@@ -53,7 +54,32 @@ class AppRouter {
         path: '/register',
         builder: (context, state) => const RegisterScreen(),
       ),
+      GoRoute(
+        path: '/courses/add',
+        builder: (context, state) => const CourseFormScreen(),
+      ),
+      GoRoute(
+        path: '/courses/edit',
+        builder: (context, state) {
+          final course = state.extra as Course;
+          return CourseFormScreen(course: course);
+        },
+      ),
+      GoRoute(
+        path: '/homeworks/add',
+        builder: (context, state) => const HomeworkFormScreen(),
+      ),
+      GoRoute(
+        path: '/homeworks/edit',
+        builder: (context, state) {
+          final homework = state.extra as Homework;
+          return HomeworkFormScreen(homework: homework);
+        },
+      ),
+      GoRoute(
+        path: '/ai-assistant',
+        builder: (context, state) => const AIAssistantScreen(),
+      ),
     ],
   );
 }
-
